@@ -1,0 +1,6 @@
+[typescriptreact]
+testingFramework = "Vitest"
+mockingFramework = "Vitest Mocks"
+
+[typescript]
+testingFramework = "Vitest"

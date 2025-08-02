@@ -1,0 +1,103 @@
+{
+  "name": "react-chat-ai-widget",
+  "private": false,
+  "version": "1.6.12",
+  "keywords": [
+    "chatbot",
+    "customer-support",
+    "ai-chat",
+    "react",
+    "typescript",
+    "live-chat",
+    "support-widget",
+    "user-behavior",
+    "chat-component",
+    "react-component",
+    "openai",
+    "ai-assistant",
+    "customer-service",
+    "widget",
+    "conversational-ui",
+    "custom-chat",
+    "helpdesk",
+    "automated-support",
+    "react-chat",
+    "smart-chat"
+  ],
+  "author": {
+    "name": "Jorge Ernesto",
+    "email": "jorgais.ernesto@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Jorge-Ernesto1355/react-chat-ai-widget"
+  },
+  "description": "Enhance user experience with a smart widget that combines AI assistants and live chat. Automate support, stay available 24/7, and boost customer engagement effortlessly.",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/React-Chat-Widget.umd.cjs",
+  "module": "./dist/React-Chat-Widget.js",
+  "types": "./dist/React-Chat-Widget.d.ts",
+  "sideEffects": [
+    "*.css",
+    "./dist/style.css"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/React-Chat-Widget.d.ts",
+      "import": "./dist/React-Chat-Widget.js",
+      "require": "./dist/React-Chat-Widget.umd.cjs"
+    },
+    "./style.css": "./dist/style.css",
+    "./dist/style.css": "./dist/style.css"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "rename-css": "rename dist/React-Chat-Widget.css dist/style.css",
+    "preview": "vite preview",
+    "test": "vitest --ui",
+    "watch": "tsc --watch"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@cypress/react": "^9.0.1",
+    "@cypress/vite-dev-server": "^6.0.3",
+    "@eslint/js": "^9.25.0",
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.3.0",
+    "@types/node": "^22.15.30",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
+    "@vitejs/plugin-react": "^4.4.1",
+    "@vitest/ui": "^3.2.4",
+    "autoprefixer": "^10.4.21",
+    "cypress": "^14.5.3",
+    "eslint": "^9.25.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.19",
+    "globals": "^16.0.0",
+    "jsdom": "^26.1.0",
+    "postcss": "^8.5.4",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "tailwindcss": "^3.4.17",
+    "typescript": "~5.8.3",
+    "typescript-eslint": "^8.30.1",
+    "vite": "^6.3.5",
+    "vite-plugin-dts": "^4.5.4",
+    "vite-plugin-static-copy": "^3.1.1",
+    "vitest": "^3.2.4"
+  },
+  "dependencies": {
+    "@huggingface/inference": "^4.4.0",
+    "clsx": "^2.1.1"
+  }
+}
