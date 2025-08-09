@@ -37,6 +37,12 @@ const Body = ({ onReady }: IBodyProps) => {
     onChunk: addMessageAssistant,
   });
 
+  const runAndCreateMessage = useCallback(async (msg: string) => {
+    const messageCreated = await addMessageUser(msg);
+    if (!messageCreated) return;
+    await runAI(msg, [...messages, messageCreated]);
+  }, []);
+
   const stableOnSubmit = useCallback(
     async (msg: string) => {
       if (
@@ -45,12 +51,10 @@ const Body = ({ onReady }: IBodyProps) => {
         msg.trim() === ""
       )
         return;
-      const messageCreated = await addMessageUser(msg);
+
       try {
         setIsLoading(true);
-
-        if (!messageCreated) return;
-        await runAI(msg, [...messages, messageCreated]);
+        await runAndCreateMessage(msg);
       } catch (error: any) {
         if (error instanceof AIServiceError) {
           const errorType = getTypeError(error);
@@ -80,7 +84,10 @@ const Body = ({ onReady }: IBodyProps) => {
 
   return (
     <>
-      <SmartAutoScrollMessages messages={messages} />
+      <SmartAutoScrollMessages
+        messages={messages}
+        onSendMessage={async (question) => stableOnSubmit(question)}
+      />
     </>
   );
 };
