@@ -1,7 +1,7 @@
 {
   "name": "react-chat-ai-widget",
   "private": false,
-  "version": "1.6.12",
+  "version": "1.6.14",
   "keywords": [
     "chatbot",
     "customer-support",
@@ -30,8 +30,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Jorge-Ernesto1355/react-chat-ai-widget"
+    "url": "https://github.com/Jorge-Ernesto1355/React_Chat_widget"
   },
+  "homepage": "https://website-chat-widget.vercel.app",
   "description": "Enhance user experience with a smart widget that combines AI assistants and live chat. Automate support, stay available 24/7, and boost customer engagement effortlessly.",
   "type": "module",
   "files": [
