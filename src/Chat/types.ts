@@ -29,4 +29,6 @@ interface StylesPropsP {
   headerStyles: React.CSSProperties;
 }
 
+export type InitialQuestions = Array<{ question: string }>;
+
 export type StylesProps = Partial<StylesPropsP>;
