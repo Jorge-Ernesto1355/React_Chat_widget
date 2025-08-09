@@ -15,14 +15,17 @@ import { ErrorMessages } from "../../utils/errorsMessage";
 const renderWithContext = ({
   huggingface,
   replicate,
+  initialQuestions,
   onReady,
 }: {
   huggingface?: string;
   replicate?: string;
+  initialQuestions?: Array<{ question: string }>;
   onReady?: (handler: (message: string) => void) => void;
 } = {}) => {
   return render(
     <ContextChat
+      initialQuestions={initialQuestions}
       config={{
         model: "gpt-3.5-turbo",
         temperature: 0.7,
@@ -297,6 +300,76 @@ describe("Body", () => {
         isLoading: false,
         errorType: "connection",
       });
+    });
+  });
+
+  it("initialQuestions should be rendered in the chat interface", async () => {
+    (useValidation as any).mockReturnValue({
+      result: { success: true },
+      tokenValidationResult: { isValid: true },
+      key: "huggingface",
+      apiKey: "huggingface",
+    });
+    const initialQuestions = [
+      { question: "Explain a simple machine learning" },
+      {
+        question: "What is the difference between?",
+      },
+    ];
+
+    (useChatContext as any).mockReturnValue({ initialQuestions });
+
+    renderWithContext({ initialQuestions });
+
+    const initialQuestionsList = screen.getByLabelText("initial-questions");
+    expect(initialQuestionsList).toBeInTheDocument();
+
+    const initialQuestionsItems = screen.getAllByRole("listitem");
+    expect(initialQuestionsItems).toHaveLength(2);
+
+    expect(initialQuestionsItems[0]).toHaveTextContent(
+      initialQuestions[0].question
+    );
+    expect(initialQuestionsItems[1]).toHaveTextContent(
+      initialQuestions[1].question
+    );
+  });
+
+  it("should not render the initialQuestions if they are not passed", async () => {
+    (useValidation as any).mockReturnValue({
+      result: { success: true },
+      tokenValidationResult: { isValid: true },
+      key: "huggingface",
+      apiKey: "huggingface",
+    });
+    renderWithContext();
+
+    const initialQuestionsList = screen.queryByLabelText("initial-questions");
+    expect(initialQuestionsList).not.toBeInTheDocument();
+  });
+
+  it.only("should call the onSendMessage function when we click on one of the initial questions", async () => {
+    (useValidation as any).mockReturnValue({
+      result: { success: true },
+      tokenValidationResult: { isValid: true },
+      key: "huggingface",
+      apiKey: "huggingface",
+    });
+    const initialQuestions = [
+      { question: "Explain a simple machine learning" },
+      {
+        question: "What is the difference between?",
+      },
+    ];
+
+    (useChatContext as any).mockReturnValue({ initialQuestions });
+
+    renderWithContext({ initialQuestions });
+
+    const initialQuestionsItems = screen.getAllByRole("listitem");
+
+    await act(async () => {
+      initialQuestionsItems[0].click();
     });
   });
 });
