@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import type { Direction } from "../utils/getStyleDirection";
 import type { DataProps } from "../services/utils/EnhancePrompt";
-import type { StylesProps } from "../types";
+import type { InitialQuestions, StylesProps } from "../types";
 import type { IReplicateConfigProps } from "../services/replicateService/replicateServiceBuilder";
 import type { IHuggingFaceConfig } from "../services/huggingFace/huggingFaceBuilder";
 
@@ -18,6 +18,7 @@ type ContextOptionals = Partial<{
   config: ConfigType;
   children: React.ReactNode;
   Loader: React.ReactNode;
+  initialQuestions: InitialQuestions;
 }>;
 
 export type IContext = StylesProps &
