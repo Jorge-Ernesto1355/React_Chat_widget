@@ -143,4 +143,65 @@ describe("<ChatWidget />", () => {
       .should("contain", "Loading");
     cy.get("[role='dialog']").should("exist");
   });
+
+  it("should render the initial questions", () => {
+    cy.mount(
+      <ChatWidget
+        huggingface="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"
+        data={mockData}
+        initialQuestions={[{ question: "Hello" }]}
+      />
+    );
+    cy.get("[data-cy='default-opener']").should("exist").should("be.visible");
+    cy.get("[role='opener-chat']").click();
+    cy.get("[role='dialog']").should("be.visible");
+    cy.get("[role='dialog']").within(() => {
+      cy.get("[aria-label='initial-questions']").should("be.visible");
+      cy.get("[aria-label='initial-questions']").within(() => {
+        cy.get("[role='listitem']").should("have.length", 1);
+        cy.get("[role='listitem']").first().should("contain", "Hello");
+      });
+    });
+  });
+
+  it("should not render the initial questions if they are not passed", () => {
+    cy.mount(
+      <ChatWidget
+        huggingface="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"
+        data={mockData}
+      />
+    );
+    cy.get("[data-cy='default-opener']").should("exist").should("be.visible");
+    cy.get("[role='opener-chat']").click();
+    cy.get("[role='dialog']").should("be.visible");
+    cy.get("[role='dialog']").within(() => {
+      cy.get("[aria-label='initial-questions']").should("not.exist");
+    });
+  });
+
+  it.only("should call the onSendMessage function when we click on one of the initial questions", () => {
+    cy.mount(
+      <ChatWidget
+        huggingface="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"
+        data={mockData}
+        initialQuestions={[{ question: "Hello" }]}
+      />
+    );
+    cy.get("[data-cy='default-opener']").should("exist").should("be.visible");
+    cy.get("[role='opener-chat']").click();
+    cy.get("[role='dialog']").should("be.visible");
+    cy.get("[role='dialog']").within(() => {
+      cy.get("[aria-label='initial-questions']").within(() => {
+        cy.get("[role='listitem']").first().click();
+      });
+    });
+
+    cy.get("[aria-label='initial-questions']").should("not.exist");
+    cy.get("[role='messages']").within(() => {
+      cy.get("[aria-label='message text']").should("have.length", 2);
+      cy.get("[aria-label='message text']")
+        .last()
+        .should("contain.text", "Hello");
+    });
+  });
 });
