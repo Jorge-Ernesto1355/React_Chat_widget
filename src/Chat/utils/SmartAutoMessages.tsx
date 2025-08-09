@@ -3,14 +3,28 @@ import type { Message as IMessage } from "../types";
 import { useStreamingScroll } from "../hooks/useStreamingScroll";
 import { useSafeStyles } from "../hooks/useSafeStyles";
 import clsx from "clsx";
+import { useState } from "react";
+import InitialQuestions from "../components/InitialQuestions";
+import { useChatContext } from "../context/Context";
 
 const SmartAutoScrollMessages = ({
   messages = [],
+  onSendMessage,
 }: {
   messages: IMessage[];
+  onSendMessage: (question: string) => void;
 }) => {
   const { containerRef } = useStreamingScroll(messages);
   const { safeChatStyles, safeChatClassName } = useSafeStyles();
+
+  const [isVisible, setIsVisible] = useState(true);
+
+  const questions = useChatContext();
+  console.log(questions);
+  const handleSendMessage = (question: string) => {
+    setIsVisible(false);
+    onSendMessage(question);
+  };
 
   return (
     <div
@@ -25,6 +39,9 @@ const SmartAutoScrollMessages = ({
       {messages?.map((message) => (
         <Message key={message.id} message={message} />
       ))}
+      {isVisible && questions && (
+        <InitialQuestions onSendMessage={handleSendMessage} />
+      )}
     </div>
   );
 };
