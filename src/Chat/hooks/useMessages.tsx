@@ -1,10 +1,10 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useState } from "react";
 import { Role, type Message } from "../types";
 import {
+  createInitialMessage,
   createMessage,
   INITIAL_MESSAGE_CONTENT,
 } from "../utils/createFirstMessage";
-import { useMessageStorage } from "./useMessageStorage";
 import type { ErrorType } from "../components/errors/AIErrorMessage";
 
 interface returnType {
@@ -29,9 +29,8 @@ const isValidMessage = (message: string): boolean => {
  */
 
 const useMessages = (): returnType => {
-  const keyStorage = useMemo(() => `chat-messages`, []);
-  const { messages, updateMessages, addMessage } =
-    useMessageStorage(keyStorage);
+  const [messages, setMessages] = useState<Message[]>([createInitialMessage()]);
+
   useEffect(() => {
     localStorage.setItem("chat-messages", JSON.stringify(messages));
   }, [messages]);
@@ -40,7 +39,7 @@ const useMessages = (): returnType => {
     async (text: string): Promise<Message | undefined> => {
       if (!isValidMessage(text)) return undefined;
       const message = createMessage(Role.User, text);
-      addMessage(message);
+      setMessages((prev) => [...prev, message]);
       return message;
     },
     []
@@ -52,7 +51,7 @@ const useMessages = (): returnType => {
       const error = options?.error ?? null;
       const errorType = options?.errorType ?? "general";
 
-      updateMessages((prev) => {
+      setMessages((prev) => {
         const lastMessage = prev[prev.length - 1];
 
         //if the user has not typed anyting and the last message is the initial message, do not add a new message
