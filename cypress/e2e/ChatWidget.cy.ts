@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-describe("template spec", () => {
+describe("ChatWidget", () => {
   it("should render the bubble Chat Widget", () => {
     cy.visit("http://localhost:5173/");
 
@@ -177,5 +177,38 @@ describe("template spec", () => {
     });
   });
 
-  
+  it("should render the initial questions", () => {
+    cy.visit("http://localhost:5173/");
+    cy.get("[aria-label='Open chat']").click();
+    cy.get("[role='dialog']").within(() => {
+      cy.get("[aria-label='initial-questions']").should("be.visible");
+      cy.get("[aria-label='initial-questions']").within(() => {
+        cy.get("[role='listitem']").should("have.length", 2);
+        cy.get("[role='listitem']")
+          .first()
+          .should("contain", "Explain a simple machine learning");
+        cy.get("[role='listitem']")
+          .last()
+          .should("contain", "What is the difference between?");
+      });
+    });
+  });
+
+  it("should delete the initial questions and add the question to the chat interface", () => {
+    cy.visit("http://localhost:5173/");
+    cy.get("[aria-label='Open chat']").click();
+    cy.get("[role='dialog']").within(() => {
+      cy.get("[aria-label='initial-questions']").within(() => {
+        cy.get("[role='listitem']").first().click();
+      });
+    });
+
+    cy.get("[aria-label='initial-questions']").should("not.exist");
+    cy.get("[role='messages']").within(() => {
+      cy.get("[aria-label='message text']").should("have.length", 2);
+      cy.get("[aria-label='message text']")
+        .last()
+        .should("contain.text", "Explain a simple machine learning");
+    });
+  });
 });
