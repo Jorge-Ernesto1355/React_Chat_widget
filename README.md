@@ -38,6 +38,7 @@ import { ChatWidget } from "react-chat-ai-widget";
   direction="left" // or "right" (default)
   huggingface="YOUR_HUGGINGFACE_TOKEN"
   Loader={<Loader />}
+  initialQuestions={[{ question: "What is the price of this product?" }]}
   // replicate="YOUR_REPLICATE_TOKEN" (use one or the other)
   config={{
     temperature: 0.7,
@@ -110,6 +111,10 @@ You can customize the layout using either class names or inline style objects.
 | └ `formStyles`    | object | No          | Styles for the entire form container.                     |
 | `config`          | object | No          | Configuration for the AI service.                         |
 | `children`        | React  | No          | Custom children component. render chat opener.            |
+
+### `initialQuestions`
+
+An array of objects containing the initial questions to be displayed in the chat interface.
 
 ---
 
