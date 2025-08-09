@@ -1,10 +1,6 @@
 import { ChatWidget } from "./Chat/ChatWidget";
 
 const App = () => {
-  const CustomLoader = () => {
-    return <div>Custom Loader maricones</div>;
-  };
-
   return (
     <div className="grid place-items-center mt-96">
       <ChatWidget
@@ -16,6 +12,12 @@ const App = () => {
           frequency_penalty: 0,
           top_p: 0,
         }}
+        initialQuestions={[
+          { question: "Explain a simple machine learning" },
+          {
+            question: "What is the difference between?",
+          },
+        ]}
         huggingface="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"
         data={{
           questions: [
@@ -30,15 +32,7 @@ const App = () => {
           ],
           useCase: "customer-support",
         }}
-        Loader={<CustomLoader />}
-      >
-        <button
-          aria-label="children"
-          className="bg-blue-500 text-white p-2 rounded-md"
-        >
-          Click me
-        </button>
-      </ChatWidget>
+      ></ChatWidget>
 
       <br />
       <br />
