@@ -13,57 +13,37 @@ const App = () => {
           top_p: 0,
         }}
         initialQuestions={[
-          { question: "Explain a simple machine learning" },
+          { question: "What is the CEO of Open AI" },
           {
-            question: "What is the difference between?",
+            question: "What is the difference between apple and banana?",
           },
         ]}
-        huggingface="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"
+        huggingface="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"
         data={{
           questions: [
             {
               question:
-                "what are the hours of close or open in the InsightFlow",
+                "What is the CEO of Open AI",
               answer:
-                "the hours of close or open in the InsightFlow are Monday to Friday from 10am to 4pm",
+                "Sam Altman",
               category: "general",
               confidence: 0.9,
             },
+            {
+              question: "What is the difference between apple and banana?",
+              answer:
+                "Apples are typically sweet and crisp, while bananas are soft and creamy. Apples come in various colors like red, green, and yellow, whereas bananas are usually yellow when ripe.",
+              category: "general",
+            }
           ],
           useCase: "customer-support",
         }}
-      ></ChatWidget>
+      >
+        
+      </ChatWidget>
 
       <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
+      
     </div>
   );
 };
