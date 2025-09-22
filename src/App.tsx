@@ -18,7 +18,7 @@ const App = () => {
             question: "What is the difference between apple and banana?",
           },
         ]}
-        huggingface="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"
+        huggingface=""
         data={{
           questions: [
             {
