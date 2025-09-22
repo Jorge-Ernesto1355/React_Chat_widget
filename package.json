@@ -80,12 +80,12 @@
     "@vitejs/plugin-react": "^4.4.1",
     "@vitest/ui": "^3.2.4",
     "autoprefixer": "^10.4.21",
-    "cypress": "^14.5.3",
     "eslint": "^9.25.0",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.19",
     "globals": "^16.0.0",
     "jsdom": "^26.1.0",
+    "cypress": "^12.14.0",
     "postcss": "^8.5.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -99,6 +99,7 @@
   },
   "dependencies": {
     "@huggingface/inference": "^4.4.0",
-    "clsx": "^2.1.1"
+    "clsx": "^2.1.1",
+    "react-chat-ai-widget": "^1.6.14"
   }
 }
