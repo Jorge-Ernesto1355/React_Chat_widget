@@ -121,13 +121,28 @@ export class AdvancedPromptEnhancer {
   private buildSystemIdentity(): string {
     return `# SPECIALIZED AI ASSISTANT
 
-    You are an expert AI assistant with access to a curated knowledge base. Your primary function is to provide accurate, helpful responses based on the specific information you've been trained on.
+You are an AI assistant that must respond ONLY with the plain answer to the question.  
 
-    ## Core Capabilities:
-    - Deep understanding of your specialized knowledge domain
-    - Ability to cross-reference and connect related information
-    - Skilled at providing context and explanations
-    - Capable of admitting knowledge limitations`;
+## STRICT OUTPUT RULES:
+- Output must contain only the answer text.  
+- Do not include "A:", "Answer:", "Response:", or any labels.  
+- Do not include emojis, icons, bullets, or symbols.  
+- Do not include categories, confidence, metadata, or explanations.  
+- Do not include extra punctuation or trailing commentary.  
+- End the response immediately after the last word of the answer.  
+
+### CORRECT
+Q: Who is the CEO of OpenAI?  
+Sam Altman  
+
+Q: What is 2 + 2?  
+4  
+
+### INCORRECT
+A: Sam Altman 🟢  
+Sam Altman : General knowledge base.  
+
+`;
   }
 
   private buildKnowledgeBase(data: DataStructure): string {
@@ -249,30 +264,33 @@ export class AdvancedPromptEnhancer {
 
     return examples.join("\n");
   }
+private buildConstraints(): string {
+  const constraints = [`## OPERATIONAL CONSTRAINTS`];
 
-  private buildConstraints(): string {
-    const constraints = [`## OPERATIONAL CONSTRAINTS`];
-
-    if (this.config.strictMode) {
-      constraints.push(
-        `- STRICT MODE: Only answer questions with direct matches in the knowledge base`
-      );
-    }
-
-    constraints.push(`- Never fabricate or hallucinate information`);
-    constraints.push(`- Always indicate your confidence level`);
-    constraints.push(`- Cite specific knowledge base entries when possible`);
-
-    if (this.config.priority === "safety") {
-      constraints.push(`- Prioritize safety and accuracy over helpfulness`);
-    } else if (this.config.priority === "helpfulness") {
-      constraints.push(
-        `- Be as helpful as possible within your knowledge constraints`
-      );
-    }
-
-    return constraints.join("\n");
+  if (this.config.strictMode) {
+    constraints.push(
+      `- STRICT MODE: Only answer questions with direct matches in the knowledge base`
+    );
   }
+
+  constraints.push(`- Never fabricate or hallucinate information`);
+  constraints.push(`- Always indicate your confidence level`);
+  constraints.push(`- Cite specific knowledge base entries when possible`);
+  
+  // New constraint added below
+  constraints.push(`- Do not repeat or rewrite the prompt enhancer; only provide the correct answer`);
+
+  if (this.config.priority === "safety") {
+    constraints.push(`- Prioritize safety and accuracy over helpfulness`);
+  } else if (this.config.priority === "helpfulness") {
+    constraints.push(
+      `- Be as helpful as possible within your knowledge constraints`
+    );
+  }
+
+  return constraints.join("\n");
+}
+
 
   private buildUserQuery(userPrompt: string): string {
     return `## USER QUERY
