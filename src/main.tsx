@@ -2,6 +2,7 @@ import reactDom from "react-dom/client";
 
 import App from "./app";
 import "./style.css";
+import "react-chat-ai-widget/style.css"
 
 const root = reactDom.createRoot(
   document.getElementById("root") as HTMLElement
